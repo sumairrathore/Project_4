@@ -50,7 +50,7 @@ Project_3/
 - `data/`: This folder contains the csv data files that will be used to create the analytics.
 
 ## Dependencies
-1. `pip install flask`
+1. `pip install flask pandas sqlalchemy`
 
 ## Development Start Up
 1. To start the server Flask app make sure you are in the root directory of the project and run `python app.py`
