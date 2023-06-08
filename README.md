@@ -7,7 +7,6 @@ Yumi Kim, Shoaib Khan, Sumair Rathore, Olivia Bryant
 3. [Project File Structure](#project-file-structure)
 4. [Dependencies](#dependencies)
 5. [Start Up](#development-start-up)
-6. ...
 
 ## Project Proposal
 
@@ -16,15 +15,7 @@ Yumi Kim, Shoaib Khan, Sumair Rathore, Olivia Bryant
 
 ## Project File Structure
 ```
-project-folder/
-├── app.py
-├── static/
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── logic.js
-└── templates/
-    └── index.html
+Project_3/
 ├── data/
 │   ├── players_15.csv
 │   ├── players_16.csv
@@ -33,6 +24,15 @@ project-folder/
 │   ├── players_19.csv
 │   ├── players_20.csv
 │   └── teams_and_leagues.csv
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── logic.js
+├── templates/
+│   └── index.html
+├── app.py
+└── README.md
 ```
 
 - `app.py`: This is the main Flask application file that contains the server-side logic.
@@ -46,14 +46,11 @@ project-folder/
 - `data/`: This folder contains the csv data files that will be used to create the analytics.
 
 ## Dependencies
-
 1. `pip install flask`
 
 ## Development Start Up
 1. To start the server Flask app make sure you are in the root directory of the project and run `python app.py`
 2. After running `python app.py` the server should be running on `http://127.0.0.1:5000`
 3. Go to `http://127.0.0.1:5000` in your broswer and you should see the site.
-
-...
 
 [Back To Top](#project-3-fifa-20-analytics)
