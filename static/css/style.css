@@ -1,0 +1,14 @@
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+    font-size: 14pt;
+    background-color: rgb(193, 217, 242);
+    color: rgb(16, 19, 21);
+    margin: 1%;
+    border: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 48pt;
+    text-align: center;
+}
