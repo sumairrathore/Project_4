@@ -12,3 +12,19 @@ h1 {
     font-size: 48pt;
     text-align: center;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: rgb(135, 182, 240);
+}
