@@ -53,4 +53,4 @@ Project_3/
 2. After running `python app.py` the server should be running on `http://127.0.0.1:5000`
 3. Go to `http://127.0.0.1:5000` in your broswer and you should see the site.
 
-[Back To Top](#project-3-fifa-20-analytics)
+[Back To Top](#project-3-fifa-analytics)
