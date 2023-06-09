@@ -1,0 +1,28 @@
+.panel {
+    float: left;
+    width: 20%;
+    height: 100%;
+    background-color: rgb(228, 232, 237);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.panel li {
+    margin-bottom: 5px;
+}
+
+.panel a {
+    text-decoration: none;
+    color: rgb(16, 19, 21);
+}

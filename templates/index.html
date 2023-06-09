@@ -10,31 +10,47 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>UofT Data Analytics Bootcamp Project 3</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/panel.css') }}">
     </head>
     <body>
-        <h1>Fifa Analytics Dashboard</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Overall</th>
-                    <th>Club</th>
-                    <th>Nationality</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for player in players %}
-                <tr>
-                    <td>{{ player.long_name }}</td>
-                    <td>{{ player.age }}</td>
-                    <td>{{ player.overall }}</td>
-                    <td>{{ player.club }}</td>
-                    <td>{{ player.nationality }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="panel">
+            <h2>Tables</h2>
+            <ul>
+                <li><a href="{{ url_for('index', table='players_15') }}">Players 15</a></li>
+                <li><a href="{{ url_for('index', table='players_16') }}">Players 16</a></li>
+                <li><a href="{{ url_for('index', table='players_17') }}">Players 17</a></li>
+                <li><a href="{{ url_for('index', table='players_18') }}">Players 18</a></li>
+                <li><a href="{{ url_for('index', table='players_19') }}">Players 19</a></li>
+                <li><a href="{{ url_for('index', table='players_20') }}">Players 20</a></li>
+                <!-- <li><a href="{{ url_for('index', table='teams_and_leagues') }}">Teams and Leagues</a></li> -->
+                <!-- Add more table links here -->
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Fifa Analytics Dashboard</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Overall</th>
+                        <th>Club</th>
+                        <th>Nationality</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                    <tr>
+                        <td>{{ player.long_name }}</td>
+                        <td>{{ player.age }}</td>
+                        <td>{{ player.overall }}</td>
+                        <td>{{ player.club }}</td>
+                        <td>{{ player.nationality }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
     </body>
 </html>
