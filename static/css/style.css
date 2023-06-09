@@ -41,6 +41,32 @@ h1 {
 /* Style the list inside the menu */
 .filters ul {
     list-style-type: none;
+    padding: 0;
+}
+
+/* Space out the table links */
+.filters li {
+    margin-bottom: 10px;
+}
+
+/* Style the table links */
+.filters a, .filters a:visited {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: rgb(51, 61, 67);
+}
+
+/* Add hover effect to table links */
+.filters a:hover {
+    background-color: rgb(135, 182, 240);
+    color: rgb(32, 38, 42);
+}
+
+/* Add active/current page effect to table links */
+.filters a.active {
+    background-color: rgb(83, 132, 207);
+    color: rgb(16, 19, 21);
 }
 
 /* Clear floats after the columns */
