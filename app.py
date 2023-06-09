@@ -1,27 +1,37 @@
-import pandas as pd
 from flask import Flask, render_template
 from sqlalchemy import create_engine
+import pandas as pd
+import os
 
 app = Flask(__name__)
 
-def load_csv_to_database(csv_file, table_name):
-    # Read the CSV file into a pandas DataFrame
-    df = pd.read_csv(csv_file)
+def load_csv_to_database():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
-    # Insert the DataFrame into the database table
-    df.to_sql(table_name, engine, if_exists='replace', index=False)
+    # Get a list of all CSV files in the data directory
+    csv_files = [file for file in os.listdir('data') if file.endswith('.csv')]
+    # Load each CSV file into the database
+    for file in csv_files:
+        table_name = file.split('.')[0]
+        csv_file = os.path.join('data', file)
+        # Read the CSV file into a pandas DataFrame
+        df = pd.read_csv(csv_file)
+        # Insert the DataFrame into the database table
+        df.to_sql(table_name, engine, if_exists='replace', index=False)
 
 @app.route('/')
 def index():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
-    # Query the required columns from the "players20" table
-    query = "SELECT long_name, age, overall, club, nationality FROM players20 LIMIT 10"
-    # Execute the query and fetch the results
-    results = engine.execute(query)
-    # Convert the results to a list of dictionaries
-    players = [dict(row) for row in results]
+    # Query the required columns from all the tables
+    query = "SELECT long_name, age, overall, club, nationality FROM players_15 LIMIT 10"
+    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 10"
+        results = engine.execute(query)
+        players += [dict(row) for row in results]
     # Render the index.html template and pass the players data to it
     return render_template('index.html', players=players)
 
@@ -30,7 +40,7 @@ def favicon():
     return '', 204
 
 if __name__ == '__main__':
-    # Load the players_20.csv file into the database
-    load_csv_to_database('data/players_20.csv', 'players20')
+    # Load all the CSV files into the database
+    load_csv_to_database()
     # Run the Flask application
     app.run(debug=True)
