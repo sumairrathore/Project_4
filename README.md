@@ -7,6 +7,7 @@ Yumi Kim, Shoaib Khan, Sumair Rathore, Olivia Bryant
 3. [Project File Structure](#project-file-structure)
 4. [Dependencies](#dependencies)
 5. [Start Up](#development-start-up)
+6. [To Work On](#to-work-on)
 
 ## Project Proposal
 The aim of our project is to create a Sports Analytics Dashboard that provides users with statistics and visualizations for sports data, such as player performance, team rankings, and game outcomes.
@@ -58,5 +59,8 @@ Project_3/
 1. To start the server Flask app make sure you are in the root directory of the project and run `python app.py`
 2. After running `python app.py` the server should be running on `http://127.0.0.1:5000`
 3. Go to `http://127.0.0.1:5000` in your broswer and you should see the site.
+
+## To Work On
+- Loading the entire dataset takes a long time to load, so need to find a quicker way to load the data.
 
 [Back To Top](#project-3-fifa-analytics)
