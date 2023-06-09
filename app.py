@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from sqlalchemy import create_engine, inspect
 import pandas as pd
 import os
+import sqlite3
 
 app = Flask(__name__)
 
@@ -37,6 +38,18 @@ def index():
         players += [dict(row) for row in results]
     # Render the index.html template and pass the players data to it
     return render_template('index.html', players=players)
+
+@app.route('/data')
+def get_table_data():
+    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/database.db')
+    # Query the required columns from the specified table
+    query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 10"
+    results = engine.execute(query)
+    players = [dict(row) for row in results]
+    # Return the table data as a JSON response
+    return jsonify(players)
 
 @app.route('/favicon.ico')
 def favicon():
