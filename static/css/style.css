@@ -6,6 +6,7 @@
     margin: 1%;
     border: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
@@ -17,30 +18,68 @@ body {
     color: rgb(16, 19, 21);
 }
 
+header {
+    padding: 30px;
+    text-align: center;
+}
+
 h1 {
     font-size: 48pt;
     text-align: center;
 }
 
-.content {
-    margin-left: 20%;
+/* Create two columns/boxes that float next to each other */
+.filters {
+    float: left;
+    width: 20%;
+    background-color: rgb(226, 233, 241);
     padding: 20px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+/* Style the list inside the menu */
+.filters ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.content {
     box-sizing: border-box;
+    float: right;
+    width: 70%;
+    background-color: rgb(226, 233, 241);
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+/* Clear floats after the columns */
+section::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
-th,
-td {
+th, td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid rgb(226, 233, 241);
 }
 
 th {
     background-color: rgb(135, 182, 240);
+    color: rgb(16, 19, 21);
+}
+
+/* Style the footer */
+footer {
+    background-color: rgb(135, 182, 240);
+    padding: 10px;
+    text-align: center;
+    color: rgb(193, 217, 242);
 }
