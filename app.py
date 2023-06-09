@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 import pandas as pd
 import os
 
@@ -8,16 +8,19 @@ app = Flask(__name__)
 def load_csv_to_database():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
+    inspector = inspect(engine)
     # Get a list of all CSV files in the data directory
     csv_files = [file for file in os.listdir('data') if file.endswith('.csv')]
     # Load each CSV file into the database
     for file in csv_files:
         table_name = file.split('.')[0]
-        csv_file = os.path.join('data', file)
-        # Read the CSV file into a pandas DataFrame
-        df = pd.read_csv(csv_file)
-        # Insert the DataFrame into the database table
-        df.to_sql(table_name, engine, if_exists='replace', index=False)
+        # Check if the table already exists in the database
+        if not inspector.has_table(table_name):
+            csv_file = os.path.join('data', file)
+            # Read the CSV file into a pandas DataFrame
+            df = pd.read_csv(csv_file)
+            # Insert the DataFrame into the database table
+            df.to_sql(table_name, engine, if_exists='replace', index=False)
 
 @app.route('/')
 def index():
