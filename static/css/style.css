@@ -109,3 +109,40 @@ footer {
     text-align: center;
     padding: 10px;
 }
+
+/* Style the top navigation */
+.top-nav {
+    background-color: rgb(124, 168, 222);
+    text-align: center;
+    padding: 10px;
+}
+
+.top-nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.top-nav li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.top-nav a {
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgb(124, 168, 222);
+    color: rgb(34, 40, 45);
+}
+
+.top-nav a:hover {
+    background-color: rgb(109, 152, 204);
+    color: rgb(23, 28, 31);
+}
+
+.top-nav a:active {
+    background-color: rgb(98, 134, 178);
+    color: rgb(9, 12, 13);
+}
