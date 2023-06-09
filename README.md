@@ -39,15 +39,17 @@ Project_3/
 └── README.md
 ```
 
-- The `app.py` file is the main Flask application file. It imports the necessary modules and defines the Flask application using the `Flask` class.
+- `app.py`: This is the main Python file that contains the Flask application. It defines the routes and handles the logic for loading CSV data into the database and rendering the web pages. This file contains the Flask application code. It defines routes for the homepage ("/") and the "/data" endpoint, which returns JSON data for a specific table. The code uses SQLAlchemy to connect to the SQLite database and execute queries.
     - The `load_csv_to_database()` function is defined to load CSV files into a SQLite database. It uses SQLAlchemy to create a database engine and inspect the tables in the database. It retrieves a list of CSV files from the "data" directory, reads each file using pandas, and inserts the data into corresponding tables in the database.
     - The `/` route is defined with the `index()` function. This function queries the required columns from all player tables and concatenates the results. It renders the `index.html` template and passes the player data to it.
     - The `/data` route is defined with the `get_table_data()` function. This function retrieves the table parameter from the query string and queries the required columns from the specified table. It returns the table data as a JSON response.
     - The `/favicon.ico` route is defined to handle the favicon request. It returns an empty response with status code 204.
-- The `index.html` template is rendered by the `index()` function. It displays a panel with links to different player tables and a table to show player data. The table is initially populated with data from the "players_15" table. The template uses Jinja2 templating to dynamically populate the table with data received from the server.
-- The `style.css` and `panel.css` files in the `static/css` directory contain CSS styles for the HTML elements in the template.
-- The `logic.js` file in the `static/js` directory contains JavaScript code that adds event listeners to the filter links in the panel. When a filter link is clicked, an AJAX request is made to the server to get the corresponding table data. The received data is used to update the table dynamically without refreshing the page.
-- The `data/` directory contains CSV files with player data for different FIFA games.
+- `data/`: This directory contains the CSV files that hold the FIFA player data. Each file represents a different year of FIFA game data.
+- `static/`: This directory contains the static files for the web application, such as CSS and JavaScript files.
+- `templates/`: This directory contains the HTML templates that define the structure and layout of the web pages.
+- `static/js/logic.js`: This JavaScript file handles the dynamic behavior of the web page. It listens for click events on the filter links and makes AJAX requests to the server to fetch the table data based on the selected filter. Then, it updates the HTML table with the new data.
+- `templates/index.html`: This HTML template defines the structure of the main web page. It includes a header, a section with filters, a content area for displaying the table, and a footer. The table is initially populated with data from the "players_15" table.
+- `static/css/style.css`: This CSS file defines the styles for the web page, including fonts, colors, layout, and table formatting.
 
 ## Dependencies
 1. `pip install flask pandas sqlalchemy`
