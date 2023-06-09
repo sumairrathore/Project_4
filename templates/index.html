@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions."/>
-        <meta name="keywords" content="Fifa, Analytics, Dashboard"/>
-        <meta name="author" content="xlivia"/>
-        <meta name="robots" content="index, follow"/>
-        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions.">
+        <meta name="keywords" content="Fifa, Analytics, Dashboard">
+        <meta name="author" content="xlivia">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>UofT Data Analytics Bootcamp Project 3</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/panel.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/panel.css') }}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="panel">
-            <h2>Tables</h2>
-            <ul>
-                <li><a href="{{ url_for('index', table='players_15') }}">Players 15</a></li>
-                <li><a href="{{ url_for('index', table='players_16') }}">Players 16</a></li>
-                <li><a href="{{ url_for('index', table='players_17') }}">Players 17</a></li>
-                <li><a href="{{ url_for('index', table='players_18') }}">Players 18</a></li>
-                <li><a href="{{ url_for('index', table='players_19') }}">Players 19</a></li>
-                <li><a href="{{ url_for('index', table='players_20') }}">Players 20</a></li>
-                <!-- <li><a href="{{ url_for('index', table='teams_and_leagues') }}">Teams and Leagues</a></li> -->
-            </ul>
-        </div>
-        <div class="content">
-            <h1>Fifa Analytics Dashboard</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Overall</th>
-                        <th>Club</th>
-                        <th>Nationality</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for player in players %}
-                    <tr>
-                        <td>{{ player.long_name }}</td>
-                        <td>{{ player.age }}</td>
-                        <td>{{ player.overall }}</td>
-                        <td>{{ player.club }}</td>
-                        <td>{{ player.nationality }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Filters</div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled">
+                                <li><a href="#players_15">Players 15</a></li>
+                                <li><a href="#players_16">Players 16</a></li>
+                                <li><a href="#players_17">Players 17</a></li>
+                                <li><a href="#players_18">Players 18</a></li>
+                                <li><a href="#players_19">Players 19</a></li>
+                                <li><a href="#players_20">Players 20</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Overall</th>
+                                <th>Club</th>
+                                <th>Nationality</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for player in players %}
+                            <tr>
+                                <td>{{ player.long_name }}</td>
+                                <td>{{ player.age }}</td>
+                                <td>{{ player.overall }}</td>
+                                <td>{{ player.club }}</td>
+                                <td>{{ player.nationality }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
     </body>

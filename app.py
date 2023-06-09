@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from sqlalchemy import create_engine, inspect
 import pandas as pd
 import os
-import sqlite3
 
 app = Flask(__name__)
 
@@ -28,7 +27,6 @@ def index():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from all the tables
-    query = "SELECT long_name, age, overall, club, nationality FROM players_15 LIMIT 10"
     tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
     # Fetch the results from each table and concatenate them
     players = []
