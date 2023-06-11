@@ -22,6 +22,8 @@ We will utilize a Python Flask-powered API, HTML/CSS, JavaScript, and a database
 ```
 Project_3/
 ├── data/
+│   └── db/
+│       └── database.db
 │   ├── players_15.csv
 │   ├── players_16.csv
 │   ├── players_17.csv
