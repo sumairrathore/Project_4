@@ -31,7 +31,7 @@ def index():
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 20"
+        query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 100"
         results = engine.execute(query)
         players += [dict(row) for row in results]
     # Render the index.html template and pass the players data to it
@@ -43,7 +43,7 @@ def get_table_data():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
-    query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 20"
+    query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 100"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
