@@ -62,7 +62,7 @@ Project_3/
 
 ## To Work On
 - Loading the entire dataset takes a long time to load, so need to find a quicker way to load the data.
-    - There are 2 lines like this `query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 20"` in the `app.py` file.
-        - The `LIMIT 20` must be removed from both to load all the data onto the page, but until we find a quicker way of loading the data for viewing on the site it, this limit will make the site load faster for development purposes.
+    - There are 2 lines like this `query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 100"` in the `app.py` file.
+        - The `LIMIT 100` must be removed from both to load all the data onto the page, but until we find a quicker way of loading the data for viewing on the site it, this limit will make the site load faster for development purposes.
 
 [Back To Top](#project-3-fifa-analytics)
