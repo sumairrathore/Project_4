@@ -38,7 +38,24 @@
                 </ul>
             </div>
             <div class="content col-lg-9">
-                <h2>Player Data</h2>
+                <select id="player-select">
+                    <option value="">Select a player</option>
+                    {% for player in players %}
+                    <option value="{{ player['long_name'] }}">{{ player['long_name'] }}</option>
+                    {% endfor %}
+                </select>
+                <table id="player-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            {% for column in columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- tbody -->
+                    </tbody>
+                </table>
             </div>
         </section>
         <footer>
