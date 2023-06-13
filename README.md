@@ -24,6 +24,14 @@ Project_3/
 ├── data/
 │   ├── db/
 │   │   └── database.db
+│   ├── cleaned_data/
+│   │   ├── players_cleaned_2015.csv
+│   │   ├── players_cleaned_2016.csv
+│   │   ├── players_cleaned_2017.csv
+│   │   ├── players_cleaned_2018.csv
+│   │   ├── players_cleaned_2019.csv
+│   │   └── players_cleaned_2020.csv
+│   ├── clean_data.ipynb
 │   ├── players_15.csv
 │   ├── players_16.csv
 │   ├── players_17.csv
