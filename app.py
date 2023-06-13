@@ -10,13 +10,13 @@ def load_csv_to_database():
     engine = create_engine('sqlite:///data/db/database.db')
     inspector = inspect(engine)
     # Get a list of all CSV files in the data directory
-    csv_files = [file for file in os.listdir('data') if file.endswith('.csv')]
+    csv_files = [file for file in os.listdir('data/cleaned_data') if file.endswith('.csv')]
     # Load each CSV file into the database
     for file in csv_files:
         table_name = file.split('.')[0]
         # Check if the table already exists in the database
         if not inspector.has_table(table_name):
-            csv_file = os.path.join('data', file)
+            csv_file = os.path.join('data/cleaned_data', file)
             # Read the CSV file into a pandas DataFrame
             df = pd.read_csv(csv_file)
             # Insert the DataFrame into the database table
