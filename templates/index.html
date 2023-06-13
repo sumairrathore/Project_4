@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
@@ -41,6 +42,24 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            {% for column in columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>                    
+                    <tbody>
+                        {% for player in players %}
+                        <tr>
+                            {% for column in columns %}
+                            <td>{{ player[column] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- <table class="table table-striped">
+                    <thead>
+                        <tr>
                             <th>Name</th>
                             <th>Age</th>
                             <th>Overall</th>
@@ -59,7 +78,7 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </section>
         <footer>

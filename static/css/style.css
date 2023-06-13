@@ -80,7 +80,7 @@ section::after {
     box-sizing: border-box;
     float: right;
     width: 75%;
-    height: 80vh;
+    height: 75vh;
     background-color: rgb(226, 233, 241);
     overflow-x: scroll;
     overflow-y: scroll;
@@ -90,6 +90,7 @@ section::after {
 table {
     width: 100%;
     border-collapse: collapse;
+    position: relative;  /* Add this line to make the table a containing block for the sticky headers */
 }
 
 th, td {
@@ -101,6 +102,9 @@ th, td {
 th {
     background-color: rgb(135, 182, 240);
     color: rgb(16, 19, 21);
+    position: sticky;  /* Add this line to make the headers sticky */
+    top: 0;  /* Add this line to specify the distance from the top where the headers will stick */
+    z-index: 1;  /* Add this line to make the headers appear above the table cells */
 }
 
 /* Style the footer */
