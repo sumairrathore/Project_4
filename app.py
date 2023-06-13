@@ -31,12 +31,19 @@ def index():
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        # query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 100"
         query = f"SELECT * FROM {table} LIMIT 100"
         results = engine.execute(query)
         players += [dict(row) for row in results]
     # Render the index.html template and pass the players data to it
     return render_template('index.html', players=players)
+
+@app.route('/player')
+def player():
+    return render_template('player.html')
+
+@app.route('/league')
+def league():
+    return render_template('league.html')
 
 @app.route('/data')
 def get_table_data():

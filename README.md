@@ -37,7 +37,9 @@ Project_3/
 │   └── js/
 │       └── logic.js
 ├── templates/
-│   └── index.html
+│   ├── index.html
+│   ├── league.html
+│   └── player.html
 ├── app.py
 └── README.md
 ```

@@ -38,24 +38,7 @@
                 </ul>
             </div>
             <div class="content col-lg-9">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            {% for column in columns %}
-                            <th>{{ column }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>                    
-                    <tbody>
-                        {% for player in players %}
-                        <tr>
-                            {% for column in columns %}
-                            <td>{{ player[column] }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <h2>Player Data</h2>
             </div>
         </section>
         <footer>
