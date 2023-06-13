@@ -1,5 +1,5 @@
 # Project 3 Fifa Analytics
-Yumi Kim, Shoaib Khan, Sumair Rathore, Olivia Bryant
+Olivia Bryant, Shoaib Khan, Sumair Rathore
 
 ### Table of Contents
 1. [Project Proposal](#project-proposal)
