@@ -39,7 +39,7 @@
             </div>
             <div class="content col-lg-9">
                 <h2>Player Data</h2>
-                <select id="player-select" onchange="optionChanged(this.value)">
+                <select id="player-select" onchange="filterTable()">
                     <option value="">Select a player</option>
                     {% for player in players %}
                     <option value="{{ player }}">{{ player }}</option>
@@ -54,7 +54,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- tbody -->
+                        {% for player in players %}
+                        <tr class="player-row">
+                            {% for column in columns %}
+                            <td>{{ player[column] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -62,6 +68,6 @@
         <footer>
             <p>Footer</p>
         </footer>
-        <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/player.js') }}"></script>
     </body>
 </html>
