@@ -1,3 +1,34 @@
+function getPlayerInfo() {
+    var playerSelect = document.getElementById('player-select');
+    var playerName = playerSelect.options[playerSelect.selectedIndex].value;
+    if (playerName !== '') {
+        $.ajax({
+            url: '/player_info',
+            type: 'GET',
+            data: { player: playerName },
+            success: function (response) {
+                var playerTableBody = $('#player-table tbody');
+                playerTableBody.empty();
+                response.forEach(function (player) {
+                    var row = '<tr>';
+                    row += '<td>' + player.short_name + '</td>';
+                    row += '<td>' + player.age + '</td>';
+                    row += '<td>' + player.nationality + '</td>';
+                    row += '<td>' + player.club + '</td>';
+                    row += '</tr>';
+                    playerTableBody.append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Error: ' + error);
+            }
+        });
+    }
+    else {
+        $('#player-table tbody').empty();
+    }
+}
+
 $(document).ready(function() {
     // Add active class to the first table link by default
     $(".filters a:first").addClass("active");

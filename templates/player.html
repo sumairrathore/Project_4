@@ -45,23 +45,16 @@
                     <option value="{{ player }}">{{ player }}</option>
                     {% endfor %}
                 </select>
-                <table class="table table-striped">
+                <table id="player-table" class="table table-striped">
                     <thead>
                         <tr>
-                            {% for column in columns %}
-                            <th>{{ column }}</th>
-                            {% endfor %}
+                            <th>Short Name</th>
+                            <th>Age</th>
+                            <th>Nationality</th>
+                            <th>Club</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for player in players %}
-                        <tr>
-                            {% for column in columns %}
-                            <td>{{ player[column] }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </section>
