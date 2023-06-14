@@ -48,6 +48,7 @@ Project_3/
 │   ├── css/
 │   │   └── style.css
 │   └── js/
+│   │   ├── player.js
 │       └── logic.js
 ├── templates/
 │   ├── index.html
@@ -56,19 +57,17 @@ Project_3/
 ├── app.py
 └── README.md
 ```
-- `app.py`: This is the main Python file that defines the Flask application and the routes for different pages. It also contains functions for loading CSV data into a SQLite database and querying the database to fetch player data.
-- `data/`: This directory contains subdirectories and files related to data management.
-    - `db/`: This subdirectory contains the SQLite database file (`database.db`).
-    - `cleaned_data/`: This subdirectory contains cleaned CSV files for each year (2015-2020) of player data.
-    - `raw_data/`: This subdirectory contains raw CSV files for each year of player data, as well as a file (`teams_and_leagues.csv`) for team and league information.
-    - `clean_data.ipynb`: This Jupyter Notebook file likely contains code for cleaning the raw CSV data.
-- `static/`: This directory contains static files, such as CSS and JavaScript files, used for styling and interactivity.
-    - `css/`: This subdirectory contains a CSS file (`style.css`) for defining the visual styles of the web pages.
-    - `js/`: This subdirectory contains a JavaScript file (`logic.js`) that handles the dynamic behavior of the web pages.
-- `templates/`: This directory contains HTML templates for the different pages of the web application.
-    - `index.html`: This template represents the main page of the dashboard, which displays the player data.
-    - `league.html`: This template likely represents a page for displaying league-specific data.
-    - `player.html`: This template likely represents a page for displaying individual player data.
+- `app.py`: This file contains the Flask application code. It defines routes for different URLs and handles requests to render HTML templates or return JSON data from the database.
+    - The `index()` function renders the `index.html` template and passes player data to it.
+    - The `player()` function renders the `player.html` template and passes player data to it.
+    - The `league()` function renders the `league.html` template.
+    - The `get_table_data()` function is an API endpoint that returns table data as JSON.
+    - The `get_player_info()` function is another API endpoint that returns player information as JSON.
+    - The `favicon()` function returns a 204 No Content response for the favicon.ico file.
+- `data/`: This directory contains subdirectories for raw and cleaned data, as well as a SQLite database file.
+- `static/`: This directory contains static assets such as CSS and JavaScript files.
+- `templates/`: This directory contains HTML templates used by the Flask application to render web pages.
+    - The HTML templates (`index.html`, `player.html`, `league.html`) define the structure and content of the web pages. They use Jinja templating syntax to dynamically generate HTML elements based on the data passed from the Flask application.
 
 ## Dependencies
 1. `pip install flask pandas sqlalchemy`
