@@ -1,4 +1,56 @@
 function getPlayerInfo() {
+    var selectedPlayer = document.getElementById('player-select').value;
+    if (selectedPlayer !== '') {
+        var url = '/player_info?selectedPlayer=' + selectedPlayer;
+        fetch(url).then(response => response.json()).then(data => {
+            var playerTable = document.getElementById('player-table');
+            var tbody = playerTable.getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            if (data.length > 0) {
+                var player = data[0];
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>' + player.short_name + '</td>' + '<td>' + player.age + '</td>' + '<td>' + player.nationality + '</td>' + '<td>' + player.club + '</td>';
+                tbody.appendChild(row);
+            }
+        }).catch(error => {
+            console.log('Error:', error);
+        });
+    }
+}
+
+/*
+function updatePlayerTable(playerInfo) {
+    var playerTable = document.getElementById("player-table");
+    var tbody = playerTable.getElementsByTagName("tbody")[0];
+    tbody.innerHTML = "";
+    for (var i = 0; i < playerInfo.length; i++) {
+        var player = playerInfo[i];
+        var row = document.createElement("tr");
+        var shortNameCell = document.createElement("td");
+        var ageCell = document.createElement("td");
+        var nationalityCell = document.createElement("td");
+        var clubCell = document.createElement("td");
+        shortNameCell.textContent = player.short_name;
+        ageCell.textContent = player.age;
+        nationalityCell.textContent = player.nationality;
+        clubCell.textContent = player.club;
+        row.appendChild(shortNameCell);
+        row.appendChild(ageCell);
+        row.appendChild(nationalityCell);
+        row.appendChild(clubCell);
+        tbody.appendChild(row);
+    }
+}
+
+function clearPlayerTable() {
+    var playerTable = document.getElementById("player-table");
+    var tbody = playerTable.getElementsByTagName("tbody")[0];
+    tbody.innerHTML = "";
+}
+*/
+
+/*
+function getPlayerInfo() {
     var playerSelect = document.getElementById('player-select');
     var playerName = playerSelect.options[playerSelect.selectedIndex].value;
     if (playerName !== '') {
@@ -28,6 +80,7 @@ function getPlayerInfo() {
         $('#player-table tbody').empty();
     }
 }
+*/
 
 $(document).ready(function() {
     // Add active class to the first table link by default
