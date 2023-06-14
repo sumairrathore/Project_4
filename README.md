@@ -11,7 +11,7 @@ Olivia Bryant, Shoaib Khan, Sumair Rathore
 7. [To Work On](#to-work-on)
 
 ## GitHub Pages
-[GitHub Pages Link Here]()
+[GitHub Pages Link Here](https://sumairrathore.github.io/Project_3/)
 
 ## Project Proposal
 The aim of our project is to create a Sports Analytics Dashboard that provides users with statistics and visualizations for sports data, such as player performance, team rankings, and game outcomes.
