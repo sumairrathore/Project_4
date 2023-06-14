@@ -1,25 +1,22 @@
 $(document).ready(function() {
-    // Function to filter the table based on the selected player name
-    function filterTable() {
-        var selectedPlayer = $("#player-select").val(); // Get the selected player name
-        // Show all rows in the table
-        $(".player-row").show();
-        // Hide rows that do not match the selected player name
-        if (selectedPlayer !== "") {
-            $(".player-row").not("[data-player='" + selectedPlayer + "']").hide();
-        }
-    }
-    // Event handler for the dropdown change event
-    $("#player-select").change(function() {
-        filterTable(); // Filter the table when the dropdown value changes
+    // Add active class to the first table link by default
+    $(".filters a:first").addClass("active");
+    // Fetch table data when a table link is clicked
+    $(".filters a").click(function(e) {
+        e.preventDefault();
+        $(".filters a").removeClass("active");
+        $(this).addClass("active");
+        var table = $(this).attr("href").substring(1);
+        fetchTableData(table);
     });
-    // Call the filterTable function initially to apply any pre-selected player name
-    filterTable();
+    // Fetch table data for the initial table
+    var initialTable = $(".filters a:first").attr("href").substring(1);
+    fetchTableData(initialTable);
 });
 
 function fetchTableData(table) {
     $.ajax({
-        url: "/data",
+        url: "/player_info",
         data: { table: table },
         success: function(data) {
             updateTable(data);

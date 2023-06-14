@@ -69,6 +69,18 @@ def get_table_data():
     # Return the table data as a JSON response
     return jsonify(players)
 
+@app.route('/player_info')
+def get_player_info():
+    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/database.db')
+    # Query the required columns from the specified table
+    query = f"SELECT short_name, age, nationality, club FROM {table} LIMIT 100"
+    results = engine.execute(query)
+    players = [dict(row) for row in results]
+    # Return the table data as a JSON response
+    return jsonify(players)
+
 @app.route('/favicon.ico')
 def favicon():
     return '', 204

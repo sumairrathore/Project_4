@@ -39,13 +39,13 @@
             </div>
             <div class="content col-lg-9">
                 <h2>Player Data</h2>
-                <select id="player-select" onchange="filterTable()">
+                <select id="player-select" onchange="getPlayerInfo()">
                     <option value="">Select a player</option>
                     {% for player in players %}
                     <option value="{{ player }}">{{ player }}</option>
                     {% endfor %}
                 </select>
-                <table id="player-table" class="table table-striped">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             {% for column in columns %}
@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                         {% for player in players %}
-                        <tr class="player-row">
+                        <tr>
                             {% for column in columns %}
                             <td>{{ player[column] }}</td>
                             {% endfor %}
