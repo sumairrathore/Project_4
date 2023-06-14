@@ -76,9 +76,9 @@ def get_player_info():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
-    #query = f"SELECT short_name, age, nationality, club FROM {table} LIMIT 100"
     query = f"SELECT short_name, age, nationality, club FROM {table} WHERE short_name = '{selectedPlayer}'"
     results = engine.execute(query)
+    print(query) # debug
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
     return jsonify(players)
