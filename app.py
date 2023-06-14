@@ -78,7 +78,6 @@ def get_player_info():
     # Query the required columns from the specified table
     query = f"SELECT short_name, age, nationality, club FROM {table} WHERE short_name = '{selectedPlayer}'"
     results = engine.execute(query)
-    print(query) # debug
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
     return jsonify(players)

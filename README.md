@@ -47,8 +47,15 @@ Project_3/
 ├── static/
 │   ├── css/
 │   │   └── style.css
+│   ├── imgs/
+│   │   ├── fifa15.jpeg
+│   │   ├── fifa16.jpeg
+│   │   ├── fifa17.jpeg
+│   │   ├── fifa19.jpeg
+│   │   ├── fifa19.jpeg
+│   │   └── fifa20.jpeg
 │   └── js/
-│   │   ├── player.js
+│       ├── player.js
 │       └── logic.js
 ├── templates/
 │   ├── index.html
