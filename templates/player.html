@@ -39,10 +39,10 @@
             </div>
             <div class="content col-lg-9">
                 <h2>Player Data</h2>
-                <select id="player-select">
+                <select id="player-select" onchange="optionChanged(this.value)">
                     <option value="">Select a player</option>
                     {% for player in players %}
-                    <option value="{{ player['long_name'] }}">{{ player['long_name'] }}</option>
+                    <option value="{{ player }}">{{ player }}</option>
                     {% endfor %}
                 </select>
                 <table id="player-table" class="table table-striped">

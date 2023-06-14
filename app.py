@@ -39,7 +39,19 @@ def index():
 
 @app.route('/player')
 def player():
-    return render_template('player.html')
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/database.db')
+    # Query the required columns from all the tables
+    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        # Query the unique values from the `short_name` column of the `players` table
+        query = f"SELECT DISTINCT short_name FROM {table}"
+        results = engine.execute(query)
+        players = [row[0] for row in results]
+    # Render the player.html template and pass the players data to it
+    return render_template('player.html', players=players)
 
 @app.route('/league')
 def league():
@@ -51,7 +63,6 @@ def get_table_data():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
-    # query = f"SELECT long_name, age, overall, club, nationality FROM {table} LIMIT 100"
     query = f"SELECT * FROM {table} LIMIT 100"
     results = engine.execute(query)
     players = [dict(row) for row in results]
