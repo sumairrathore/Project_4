@@ -39,29 +39,28 @@
             </div>
             <div class="content col-lg-9">
                 <h2>Player Data</h2>
-                <select id="player-select">
+                <select id="player-select" onchange="getPlayerInfo()">
                     <option value="">Select a player</option>
                     {% for player in players %}
-                    <option value="{{ player['long_name'] }}">{{ player['long_name'] }}</option>
+                    <option value="{{ player }}">{{ player }}</option>
                     {% endfor %}
                 </select>
                 <table id="player-table" class="table table-striped">
                     <thead>
                         <tr>
-                            {% for column in columns %}
-                            <th>{{ column }}</th>
-                            {% endfor %}
+                            <th>Short Name</th>
+                            <th>Age</th>
+                            <th>Nationality</th>
+                            <th>Club</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- tbody -->
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </section>
         <footer>
-            <p>Footer</p>
+            <p>Project 3</p>
         </footer>
-        <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/player.js') }}"></script>
     </body>
 </html>
