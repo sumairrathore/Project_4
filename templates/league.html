@@ -39,29 +39,29 @@
             </div>
             <div class="content col-lg-9">
                 <h2>League Data</h2>
-                <table class="table table-striped">
+                <select id="player-select" onchange="getLeagueInfo()">
+                    <option value="">Select a player</option>
+                    {% for player in players %}
+                    <option value="{{ player }}">{{ player }}</option>
+                    {% endfor %}
+                </select>
+                <table id="player-table" class="table table-striped">
                     <thead>
                         <tr>
-                            {% for column in columns %}
-                            <th>{{ column }}</th>
-                            {% endfor %}
+                            <th>Short Name</th>
+                            <th>Nationality</th>
+                            <th>Club</th>
+                            <th>Team Position</th>
+                            <th>Age</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for player in players %}
-                        <tr>
-                            {% for column in columns %}
-                            <td>{{ player[column] }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </section>
         <footer>
             <p>Project 3</p>
         </footer>
-        <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/league.js') }}"></script>
     </body>
 </html>

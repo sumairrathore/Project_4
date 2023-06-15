@@ -55,7 +55,19 @@ def player():
 
 @app.route('/league')
 def league():
-    return render_template('league.html')
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/database.db')
+    # Query the required columns from all the tables
+    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        # Query the unique values from the `short_name` column of the `players` table
+        query = f"SELECT DISTINCT short_name FROM {table}"
+        results = engine.execute(query)
+        players = [row[0] for row in results]
+    # Render the player.html template and pass the players data to it
+    return render_template('league.html', players=players)
 
 @app.route('/data')
 def get_table_data():
@@ -81,6 +93,19 @@ def get_player_info():
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
     return jsonify(players)
+
+@app.route('/league_info')
+def get_league_info():
+    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/database.db')
+    # Query the required columns from the specified table
+    query = f"SELECT short_name, nationality, club, team_position, age FROM {table} WHERE short_name = '{selectedPlayer}'"
+    results = engine.execute(query)
+    leagues = [dict(row) for row in results]
+    # Return the table data as a JSON response
+    return jsonify(leagues)
 
 @app.route('/favicon.ico')
 def favicon():
