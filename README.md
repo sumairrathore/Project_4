@@ -9,6 +9,7 @@ Olivia Bryant, Shoaib Khan, Sumair Rathore
 5. [Dependencies](#dependencies)
 6. [Start Up](#development-start-up)
 7. [To Work On](#to-work-on)
+8. [Presentation Notes](#presentation-notes)
 
 ## GitHub Pages
 [GitHub Pages Link Here](https://sumairrathore.github.io/Project_3/)
