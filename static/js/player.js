@@ -1,4 +1,62 @@
 function getPlayerInfo() {
+    var selectedPlayer = document.getElementById("player-select").value;
+    var selectedTable = getSelectedTable();
+
+    // Make an AJAX request to the server to get the player information
+    $.get("/player_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
+        // Update the table data with the received player information
+        var playerTable = document.getElementById("player-table");
+        var tbody = playerTable.getElementsByTagName("tbody")[0];
+        tbody.innerHTML = "";
+        for (var i = 0; i < data.length; i++) {
+            var row = document.createElement("tr");
+            var shortNameCell = document.createElement("td");
+            shortNameCell.textContent = data[i].short_name;
+            var ageCell = document.createElement("td");
+            ageCell.textContent = data[i].age;
+            var nationalityCell = document.createElement("td");
+            nationalityCell.textContent = data[i].nationality;
+            var clubCell = document.createElement("td");
+            clubCell.textContent = data[i].club;
+            row.appendChild(shortNameCell);
+            row.appendChild(ageCell);
+            row.appendChild(nationalityCell);
+            row.appendChild(clubCell);
+            tbody.appendChild(row);
+        }
+    });
+}
+
+function getSelectedTable() {
+    // Get the hash value from the URL
+    var hash = window.location.hash;
+    if (hash) {
+        // Remove the '#' character from the hash
+        var table = hash.substr(1);
+        return table;
+    } else {
+        // Return the default table name
+        return "players_15";
+    }
+}
+
+$(document).ready(function() {
+    // Add an event listener to the filter links
+    $(".filters a").click(function(event) {
+        // Prevent the default behavior of the anchor tag
+        event.preventDefault();
+        // Update the URL hash with the selected table
+        window.location.hash = $(this).attr("href");
+        // Call the getPlayerInfo function to update the table data
+        getPlayerInfo();
+    });
+
+    // Call the getPlayerInfo function initially to load the default table data
+    getPlayerInfo();
+});
+
+/*
+function getPlayerInfo() {
     var selectedPlayer = document.getElementById('player-select').value;
     if (selectedPlayer !== '') {
         var selectedTable = $(".filters a.active").attr("href").substring(1);
@@ -82,3 +140,4 @@ function filterTable() {
         }
     }
 }
+*/
