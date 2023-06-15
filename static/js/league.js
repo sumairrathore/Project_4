@@ -20,7 +20,7 @@ function getLeagueInfo() {
             clubCell.textContent = data[i].club;
             // team_position
             var tposCell = document.createElement("td");
-            tposCell.textContent = data[i].tpos;
+            tposCell.textContent = data[i].team_position;
             // age
             var ageCell = document.createElement("td");
             ageCell.textContent = data[i].age;
