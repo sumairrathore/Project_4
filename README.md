@@ -83,5 +83,5 @@ Project_3/
 - Loading the entire dataset takes a long time to load, so need to find a quicker way to load the data.
     - There are 2 lines like this `query = f"SELECT * FROM {table} LIMIT 100"` in the `app.py` file.
         - The `LIMIT 100` must be removed from both to load all the data onto the page, but until we find a quicker way of loading the data for viewing on the site it, this limit will make the site load faster for development purposes.
-
+https://github.com/sumairrathore/Project_3/blob/main/index.html
 [Back To Top](#project-3-fifa-analytics)
