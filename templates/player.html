@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions.">
+        <meta name="keywords" content="Fifa, Analytics, Dashboard">
+        <meta name="author" content="xlivia">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>UofT Data Analytics Bootcamp Project 3</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Fifa Analytics Dashboard</h1>
+        </header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="/">All Data</a></li>
+                <li><a href="/player">Player Data</a></li>
+                <li><a href="/league">League Data</a></li>
+            </ul>
+        </nav>
+        <section>
+            <div class="filters">
+                <ul class="list-unstyled">
+                    <li><a href="#players_15">Players 2015</a></li>
+                    <li><a href="#players_16">Players 2016</a></li>
+                    <li><a href="#players_17">Players 2017</a></li>
+                    <li><a href="#players_18">Players 2018</a></li>
+                    <li><a href="#players_19">Players 2019</a></li>
+                    <li><a href="#players_20">Players 2020</a></li>
+                </ul>
+            </div>
+            <div class="content col-lg-9">
+                <h2>Player Data</h2>
+                <select id="player-select" onchange="getPlayerInfo()">
+                    <option value="">Select a player</option>
+                    {% for player in players %}
+                    <option value="{{ player }}">{{ player }}</option>
+                    {% endfor %}
+                </select>
+                <table id="player-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Short Name</th>
+                            <th>Age</th>
+                            <th>Nationality</th>
+                            <th>Club</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+        <footer>
+            <p>Project 3</p>
+        </footer>
+        <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+    </body>
+</html>
