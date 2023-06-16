@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions.">
+        <meta name="keywords" content="Fifa, Analytics, Dashboard">
+        <meta name="author" content="xlivia">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>UofT Data Analytics Bootcamp Project 3</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
+    </head>
+    <body onload="displayMap()">
+        <header>
+            <h1>Fifa Analytics Dashboard</h1>
+        </header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="/">All Data</a></li>
+                <li><a href="/player">Player Data</a></li>
+                <li><a href="/league">League Data</a></li>
+                <li><a href="/map">Map</a></li>
+            </ul>
+        </nav>
+        <section>
+            <div class="filters">
+                <ul class="list-unstyled">
+                    <li><a href="#players_15">Players 2015</a></li>
+                    <li><a href="#players_16">Players 2016</a></li>
+                    <li><a href="#players_17">Players 2017</a></li>
+                    <li><a href="#players_18">Players 2018</a></li>
+                    <li><a href="#players_19">Players 2019</a></li>
+                    <li><a href="#players_20">Players 2020</a></li>
+                </ul>
+            </div>
+            <div id="map" class="content"></div>
+        </section>
+        <footer>
+            <p>Project 3</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+        <!-- <script>
+            var map = L.map('map').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(map);
+        </script> -->
+        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions.">
+        <meta name="keywords" content="Fifa, Analytics, Dashboard">
+        <meta name="author" content="xlivia">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>UofT Data Analytics Bootcamp Project 3</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    </head>
+    <body onload="init()">
+        <header>
+            <h1>Fifa Analytics Dashboard</h1>
+        </header>
+        <nav class="top-nav">
+            <ul>
+                <li><a href="/">All Data</a></li>
+                <li><a href="/player">Player Data</a></li>
+                <li><a href="/league">League Data</a></li>
+                <li><a href="/map">Map</a></li>
+            </ul>
+        </nav>
+        <section>
+            <div class="filters">
+                <ul class="list-unstyled">
+                    <li><a href="#players_15">Players 2015</a></li>
+                    <li><a href="#players_16">Players 2016</a></li>
+                    <li><a href="#players_17">Players 2017</a></li>
+                    <li><a href="#players_18">Players 2018</a></li>
+                    <li><a href="#players_19">Players 2019</a></li>
+                    <li><a href="#players_20">Players 2020</a></li>
+                </ul>
+            </div>
+        </section>
+        <div id="map"></div>
+        <script>
+            function init() {
+                var mymap = L.map('map').setView([51.505, -0.09], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                    maxZoom: 18,
+                }).addTo(mymap);
+                // Add any additional map configuration or markers as needed
+            }
+            // Call the init function once the page has loaded
+            document.addEventListener('DOMContentLoaded', init);
+        </script>
+        <footer>
+            <p>Project 3</p>
+        </footer>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    </body>
+</html>
+-->
