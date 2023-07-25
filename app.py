@@ -69,6 +69,10 @@ def league():
     # Render the player.html template and pass the players data to it
     return render_template('league.html', players=players)
 
+@app.route('/map')
+def map():
+    return render_template('map.html')
+
 @app.route('/data')
 def get_table_data():
     table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
