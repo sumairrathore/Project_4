@@ -7,8 +7,7 @@ Olivia Bryant, Shoaib Khan, Sumair Rathore
 3. [Data Source](#data-source)
 4. [Project File Structure](#project-file-structure)
 5. [Dependencies](#dependencies)
-6. [Start Up](#development-start-up)
-7. [Presentation Notes](#presentation-notes)
+6. [Presentation Notes](#presentation-notes)
 
 ## GitHub Pages
 [GitHub Pages Link Here](https://sumairrathore.github.io/Project_3/)
