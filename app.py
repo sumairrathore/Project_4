@@ -27,7 +27,7 @@ def index():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from all the tables
-    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
@@ -42,12 +42,12 @@ def player():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from all the tables
-    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
         # Query the unique values from the `short_name` column of the `players` table
-        query = f"SELECT DISTINCT short_name FROM {table}"
+        query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
     # Render the player.html template and pass the players data to it
@@ -58,12 +58,12 @@ def league():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from all the tables
-    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
         # Query the unique values from the `short_name` column of the `players` table
-        query = f"SELECT DISTINCT short_name FROM {table}"
+        query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
     # Render the player.html template and pass the players data to it
@@ -75,7 +75,7 @@ def map():
 
 @app.route('/data')
 def get_table_data():
-    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
@@ -87,12 +87,12 @@ def get_table_data():
 
 @app.route('/player_info')
 def get_player_info():
-    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
     selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
-    query = f"SELECT short_name, age, nationality, club FROM {table} WHERE short_name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
@@ -105,7 +105,7 @@ def get_league_info():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/database.db')
     # Query the required columns from the specified table
-    query = f"SELECT short_name, nationality, club, team_position, age FROM {table} WHERE short_name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     leagues = [dict(row) for row in results]
     # Return the table data as a JSON response
