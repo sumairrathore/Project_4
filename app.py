@@ -63,9 +63,13 @@ def player():
     # Render the player.html template and pass the players data to it
     return render_template('player.html', players=players)
 
+@app.route('/map')
+def map():
+    return render_template('map.html')
+
 @app.route('/data')
 def get_table_data():
-    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'players_17')  # Get the table parameter from the query string, default to 'players_15'
     # Create a SQLAlchemy engine to connect to the database
     #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
@@ -78,7 +82,7 @@ def get_table_data():
 
 @app.route('/player_info')
 def get_player_info():
-    table = request.args.get('table', 'players_23')
+    table = request.args.get('table', 'players_17')
     selectedPlayer = request.args.get('selectedPlayer', '')
     engine = create_engine('sqlite:///data/db/project4db.db')
     query = f"SELECT Name, Age, Nationality, Club, Wage FROM {table} WHERE Name = '{selectedPlayer}'"

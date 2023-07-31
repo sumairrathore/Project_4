@@ -6,16 +6,12 @@
         <meta name="description" content="The dashboard will allow users to explore and analyze the data based on different filters, enabling them to gain insights and make data-driven decisions.">
         <meta name="keywords" content="Fifa, Analytics, Dashboard">
         <meta name="author" content="xlivia">
-        <meta name="robots" content="index, follow">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>UofT Data Analytics Bootcamp Project 4</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
     </head>
-    <body>
+    <body onload="displayMap()">
         <header>
             <h1>Fifa Analytics Dashboard</h1>
         </header>
@@ -38,30 +34,25 @@
                     <li><a href="#players_23">Players 2023</a></li>
                 </ul>
             </div>
-            <div class="content col-lg-9">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            {% for column in columns %}
-                            <th>{{ column }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>                    
-                    <tbody>
-                        {% for player in players %}
-                        <tr>
-                            {% for column in columns %}
-                            <td>{{ player[column] }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <div id="map" class="content"></div>
         </section>
         <footer>
-            <p>Project 4</p>
+            <p>Project 3</p>
         </footer>
-        <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+        <!-- <script>
+            var map = L.map('map').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(map);
+        </script> -->
+        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </body>
 </html>
