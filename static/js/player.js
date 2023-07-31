@@ -9,18 +9,24 @@ function getPlayerInfo() {
         tbody.innerHTML = "";
         for (var i = 0; i < data.length; i++) {
             var row = document.createElement("tr");
-            var shortNameCell = document.createElement("td");
-            shortNameCell.textContent = data[i].short_name;
+            var nameCell = document.createElement("td");
+            nameCell.textContent = data[i]['Name'];
             var ageCell = document.createElement("td");
-            ageCell.textContent = data[i].age;
+            ageCell.textContent = data[i]['Age'];
             var nationalityCell = document.createElement("td");
-            nationalityCell.textContent = data[i].nationality;
+            nationalityCell.textContent = data[i]['Nationality'];
             var clubCell = document.createElement("td");
-            clubCell.textContent = data[i].club;
-            row.appendChild(shortNameCell);
+            clubCell.textContent = data[i]['Club'];
+            var positionCell = document.createElement("td");
+            positionCell.textContent = data[i]['Position'];
+            var predictedRatingCell = document.createElement("td");
+            predictedRatingCell.textContent = data[i]['PredictedRating'];
+            row.appendChild(nameCell);
             row.appendChild(ageCell);
             row.appendChild(nationalityCell);
             row.appendChild(clubCell);
+            row.appendChild(positionCell);
+            row.appendChild(predictedRatingCell); // Add the predicted rating cell to the row
             tbody.appendChild(row);
         }
     });
