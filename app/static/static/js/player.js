@@ -1,101 +1,66 @@
 function getPlayerInfo() {
-    var selectedPlayer = document.getElementById('player-select').value;
-    if (selectedPlayer !== '') {
-        var url = '/player_info?selectedPlayer=' + selectedPlayer;
-        fetch(url).then(response => response.json()).then(data => {
-            var playerTable = document.getElementById('player-table');
-            var tbody = playerTable.getElementsByTagName('tbody')[0];
-            tbody.innerHTML = '';
-            if (data.length > 0) {
-                var player = data[0];
-                var row = document.createElement('tr');
-                row.innerHTML = '<td>' + player.short_name + '</td>' + '<td>' + player.age + '</td>' + '<td>' + player.nationality + '</td>' + '<td>' + player.club + '</td>';
-                tbody.appendChild(row);
-            }
-        }).catch(error => {
-            console.log('Error:', error);
-        });
-    }
+    var selectedPlayer = document.getElementById("player-select").value;
+    var selectedTable = getSelectedTable();
+    // Make an AJAX request to the server to get the player information
+    $.get("/player_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
+        // Update the table data with the received player information
+        var playerTable = document.getElementById("player-table");
+        var tbody = playerTable.getElementsByTagName("tbody")[0];
+        tbody.innerHTML = "";
+        for (var i = 0; i < data.length; i++) {
+            var row = document.createElement("tr");
+            var shortNameCell = document.createElement("td");
+            shortNameCell.textContent = data[i].short_name;
+            var ageCell = document.createElement("td");
+            ageCell.textContent = data[i].age;
+            var nationalityCell = document.createElement("td");
+            nationalityCell.textContent = data[i].nationality;
+            var clubCell = document.createElement("td");
+            clubCell.textContent = data[i].club;
+            row.appendChild(shortNameCell);
+            row.appendChild(ageCell);
+            row.appendChild(nationalityCell);
+            row.appendChild(clubCell);
+            tbody.appendChild(row);
+        }
+    });
 }
 
-/*
-function updatePlayerTable(playerInfo) {
-    var playerTable = document.getElementById("player-table");
-    var tbody = playerTable.getElementsByTagName("tbody")[0];
-    tbody.innerHTML = "";
-    for (var i = 0; i < playerInfo.length; i++) {
-        var player = playerInfo[i];
-        var row = document.createElement("tr");
-        var shortNameCell = document.createElement("td");
-        var ageCell = document.createElement("td");
-        var nationalityCell = document.createElement("td");
-        var clubCell = document.createElement("td");
-        shortNameCell.textContent = player.short_name;
-        ageCell.textContent = player.age;
-        nationalityCell.textContent = player.nationality;
-        clubCell.textContent = player.club;
-        row.appendChild(shortNameCell);
-        row.appendChild(ageCell);
-        row.appendChild(nationalityCell);
-        row.appendChild(clubCell);
-        tbody.appendChild(row);
-    }
-}
-
-function clearPlayerTable() {
-    var playerTable = document.getElementById("player-table");
-    var tbody = playerTable.getElementsByTagName("tbody")[0];
-    tbody.innerHTML = "";
-}
-*/
-
-/*
-function getPlayerInfo() {
-    var playerSelect = document.getElementById('player-select');
-    var playerName = playerSelect.options[playerSelect.selectedIndex].value;
-    if (playerName !== '') {
-        $.ajax({
-            url: '/player_info',
-            type: 'GET',
-            data: { player: playerName },
-            success: function (response) {
-                var playerTableBody = $('#player-table tbody');
-                playerTableBody.empty();
-                response.forEach(function (player) {
-                    var row = '<tr>';
-                    row += '<td>' + player.short_name + '</td>';
-                    row += '<td>' + player.age + '</td>';
-                    row += '<td>' + player.nationality + '</td>';
-                    row += '<td>' + player.club + '</td>';
-                    row += '</tr>';
-                    playerTableBody.append(row);
-                });
-            },
-            error: function (xhr, status, error) {
-                console.log('Error: ' + error);
-            }
-        });
+function getSelectedTable() {
+    // Get the hash value from the URL
+    var hash = window.location.hash;
+    if (hash) {
+        // Remove the '#' character from the hash
+        var table = hash.substr(1);
+        return table;
     }
     else {
-        $('#player-table tbody').empty();
+        // Return the default table name
+        return "players_23";
     }
 }
-*/
 
 $(document).ready(function() {
     // Add active class to the first table link by default
     $(".filters a:first").addClass("active");
-    // Fetch table data when a table link is clicked
-    $(".filters a").click(function(e) {
-        e.preventDefault();
+    // Add an event listener to the filter links
+    $(".filters a").click(function(event) {
+        // Prevent the default behavior of the anchor tag
+        event.preventDefault();
         $(".filters a").removeClass("active");
         $(this).addClass("active");
         var table = $(this).attr("href").substring(1);
         fetchTableData(table);
+        // Update the URL hash with the selected table
+        window.location.hash = $(this).attr("href");
+        // Call the getPlayerInfo function to update the table data
+        getPlayerInfo();
     });
     // Fetch table data for the initial table
     var initialTable = $(".filters a:first").attr("href").substring(1);
     fetchTableData(initialTable);
+    // Call the getPlayerInfo function initially to load the default table data
+    getPlayerInfo();
 });
 
 function fetchTableData(table) {

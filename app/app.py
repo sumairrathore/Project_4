@@ -7,7 +7,8 @@ app = Flask(__name__)
 
 def load_csv_to_database():
     # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/database.db')
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
     inspector = inspect(engine)
     # Get a list of all CSV files in the data directory
     csv_files = [file for file in os.listdir('data/cleaned_data') if file.endswith('.csv')]
@@ -25,9 +26,10 @@ def load_csv_to_database():
 @app.route('/')
 def index():
     # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/database.db')
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
-    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
@@ -40,14 +42,15 @@ def index():
 @app.route('/player')
 def player():
     # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/database.db')
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
-    tables = ['players_15', 'players_16', 'players_17', 'players_18', 'players_19', 'players_20']
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
         # Query the unique values from the `short_name` column of the `players` table
-        query = f"SELECT DISTINCT short_name FROM {table}"
+        query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
     # Render the player.html template and pass the players data to it
@@ -55,13 +58,31 @@ def player():
 
 @app.route('/league')
 def league():
-    return render_template('league.html')
+    # Create a SQLAlchemy engine to connect to the database
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    # Query the required columns from all the tables
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        # Query the unique values from the `short_name` column of the `players` table
+        query = f"SELECT DISTINCT Name FROM {table}"
+        results = engine.execute(query)
+        players = [row[0] for row in results]
+    # Render the player.html template and pass the players data to it
+    return render_template('league.html', players=players)
+
+@app.route('/map')
+def map():
+    return render_template('map.html')
 
 @app.route('/data')
 def get_table_data():
-    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
     # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/database.db')
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
     query = f"SELECT * FROM {table} LIMIT 100"
     results = engine.execute(query)
@@ -71,17 +92,31 @@ def get_table_data():
 
 @app.route('/player_info')
 def get_player_info():
-    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
     selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
     # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/database.db')
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
-    #query = f"SELECT short_name, age, nationality, club FROM {table} LIMIT 100"
-    query = f"SELECT short_name, age, nationality, club FROM {table} WHERE short_name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
     return jsonify(players)
+
+@app.route('/league_info')
+def get_league_info():
+    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
+    # Create a SQLAlchemy engine to connect to the database
+    #engine = create_engine('sqlite:///data/db/database.db')
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    # Query the required columns from the specified table
+    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
+    results = engine.execute(query)
+    leagues = [dict(row) for row in results]
+    # Return the table data as a JSON response
+    return jsonify(leagues)
 
 @app.route('/favicon.ico')
 def favicon():

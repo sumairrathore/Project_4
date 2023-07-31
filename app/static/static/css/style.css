@@ -150,3 +150,7 @@ footer {
     background-color: rgb(98, 134, 178);
     color: rgb(9, 12, 13);
 }
+
+#map {
+    height: 75vh;
+}
