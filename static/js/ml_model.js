@@ -1,8 +1,8 @@
-function getPlayerInfo() {
+function getModelInfo() {
     var selectedPlayer = document.getElementById("player-select").value;
     var selectedTable = getSelectedTable();
     // Make an AJAX request to the server to get the player information
-    $.get("/player_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
+    $.get("/ml_model_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
         // Update the table data with the received player information
         var playerTable = document.getElementById("player-table");
         var tbody = playerTable.getElementsByTagName("tbody")[0];
@@ -15,15 +15,15 @@ function getPlayerInfo() {
             ageCell.textContent = data[i]['Age'];
             var nationalityCell = document.createElement("td");
             nationalityCell.textContent = data[i]['Nationality'];
-            var clubCell = document.createElement("td");
-            clubCell.textContent = data[i]['Club'];
             var wageCell = document.createElement("td");
             wageCell.textContent = data[i]['Wage'];
+            var predictedRatingCell = document.createElement("td");
+            predictedRatingCell.textContent = data[i]['PredictedRating'];
             row.appendChild(nameCell);
             row.appendChild(ageCell);
             row.appendChild(nationalityCell);
-            row.appendChild(clubCell);
             row.appendChild(wageCell);
+            row.appendChild(predictedRatingCell); // Add the predicted rating cell to the row
             tbody.appendChild(row);
         }
     });
@@ -56,19 +56,19 @@ $(document).ready(function() {
         fetchTableData(table);
         // Update the URL hash with the selected table
         window.location.hash = $(this).attr("href");
-        // Call the getPlayerInfo function to update the table data
-        getPlayerInfo();
+        // Call the getModelInfo function to update the table data
+        getModelInfo();
     });
     // Fetch table data for the initial table
     var initialTable = $(".filters a:first").attr("href").substring(1);
     fetchTableData(initialTable);
-    // Call the getPlayerInfo function initially to load the default table data
-    getPlayerInfo();
+    // Call the getModelInfo function initially to load the default table data
+    getModelInfo();
 });
 
 function fetchTableData(table) {
     $.ajax({
-        url: "/player_info",
+        url: "/ml_model_info",
         data: { table: table },
         success: function(data) {
             updateTable(data);

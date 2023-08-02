@@ -61,6 +61,22 @@ def player():
     # Render the player.html template and pass the players data to it
     return render_template('player.html', players=players)
 
+@app.route('/ml_model')
+def ml_model_info():
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    # Query the required columns from all the tables
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        # Query the unique values from the `short_name` column of the `players` table
+        query = f"SELECT DISTINCT Name FROM {table}"
+        results = engine.execute(query)
+        players = [row[0] for row in results]
+    # Render the player.html template and pass the players data to it
+    return render_template('player.html', players=players)
+
 @app.route('/data')
 def get_table_data():
     table = request.args.get('table', 'players_17')  # Get the table parameter from the query string, default to 'players_15'
@@ -81,7 +97,6 @@ def get_player_info():
     query = f"SELECT Name, Age, Nationality, Club, Wage FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
-    # Add a predicted rating to each player's data
     for player in players:
         player_info = {
             'Age': player['Age'],
@@ -89,16 +104,29 @@ def get_player_info():
             'Club': player['Club'],
             'Wage': player['Wage']
         }
-        player['PredictedRating'] = predict_player_rating(player_info)
+    return jsonify(players)
+
+@app.route('/ml_model_info')
+def get_ml_model_info():
+    table = request.args.get('table', 'players_17')
+    selectedPlayer = request.args.get('selectedPlayer', '')
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    query = f"SELECT Name, Age, Nationality, Club, Wage FROM {table} WHERE Name = '{selectedPlayer}'"
+    results = engine.execute(query)
+    players = [dict(row) for row in results]
+    # Add a predicted rating to each player's data
+    for player in players:
+        ml_model_info = {
+            'Age': player['Age'],
+            'Nationality': player['Nationality'],
+            'Club': player['Club'],
+            'Wage': player['Wage']
+        }
+        #player['PredictedRating'] = predict_player_rating(ml_model_info)
         # Integrate the actual machine learning model prediction here
         # Replace predict_player_rating() with the prediction function provided by your group members
         # For example: player['PredictedRating'] = ml_model.predict(player_info)
     return jsonify(players)
-
-# Add a route to serve the charts.js file
-@app.route('/static/js/charts.js')
-def serve_charts_js():
-    return app.send_static_file('js/charts.js')
 
 @app.route('/favicon.ico')
 def favicon():

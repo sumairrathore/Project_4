@@ -40,7 +40,7 @@
             </div>
             <div class="content col-lg-9">
                 <h2>Player Data</h2>
-                <select id="player-select" onchange="getPlayerInfo()">
+                <select id="player-select" onchange="getModelInfo()">
                     <option value="">Select a player</option>
                     {% for player in players %}
                     <option value="{{ player }}">{{ player }}</option>
@@ -52,8 +52,8 @@
                             <th>Name</th>
                             <th>Age</th>
                             <th>Nationality</th>
-                            <th>Club</th>
                             <th>Wage</th>
+                            <th>Player Prediction</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
