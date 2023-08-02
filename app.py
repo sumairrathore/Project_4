@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, jsonify
 from sqlalchemy import create_engine, inspect
 import pandas as pd
 import os
+import ml_model
 
 app = Flask(__name__)
 
 def load_csv_to_database():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     inspector = inspect(engine)
     # Get a list of all CSV files in the data directory
@@ -23,23 +23,9 @@ def load_csv_to_database():
             # Insert the DataFrame into the database table
             df.to_sql(table_name, engine, if_exists='replace', index=False)
 
-def fetch_chart_data():
-    # Create a SQLAlchemy engine to connect to the database
-    engine = create_engine('sqlite:///data/db/project4db.db')
-    # Query the required columns from the specified table
-    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
-    # Fetch the results from each table and concatenate them
-    players = []
-    for table in tables:
-        query = f"SELECT * FROM {table} LIMIT 100"
-        results = engine.execute(query)
-        players += [dict(row) for row in results]
-    return players
-
 @app.route('/')
 def index():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
     tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
@@ -62,7 +48,6 @@ def predict_player_rating(player_info):
 @app.route('/player')
 def player():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
     tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
@@ -76,21 +61,10 @@ def player():
     # Render the player.html template and pass the players data to it
     return render_template('player.html', players=players)
 
-@app.route('/charts')
-def charts():
-    # Fetch data for the charts.html template
-    chart_data = fetch_chart_data()
-    return render_template('charts.html', players=chart_data)
-
-@app.route('/map')
-def map():
-    return render_template('map.html')
-
 @app.route('/data')
 def get_table_data():
     table = request.args.get('table', 'players_17')  # Get the table parameter from the query string, default to 'players_15'
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
     query = f"SELECT * FROM {table} LIMIT 100"
