@@ -47,3 +47,23 @@ function updateTable(data) {
     });
     $("table tbody").html(tableRows);
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('predict-button');
+    const predictionsDiv = document.getElementById('predictions');
+
+    button.addEventListener('click', function () {
+        // Send an AJAX request to the Flask endpoint to get the predictions
+        fetch('/get_predictions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(predictions => {
+            // Display the predictions in the 'predictionsDiv' element
+            predictionsDiv.innerHTML = '<h2>Predictions:</h2>' + JSON.stringify(predictions);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});

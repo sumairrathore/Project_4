@@ -4,6 +4,7 @@ function getPlayerInfo() {
     // Make an AJAX request to the server to get the player information
     $.get("/player_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
         // Update the table data with the received player information
+        updateTable(data);
         var playerTable = document.getElementById("player-table");
         var tbody = playerTable.getElementsByTagName("tbody")[0];
         tbody.innerHTML = "";
@@ -36,7 +37,7 @@ function getSelectedTable() {
     }
     else {
         // Return the default table name
-        return "players_23";
+        return "FIFA23_official_data";
     }
 }
 
@@ -75,6 +76,7 @@ function fetchTableData(table) {
         }
     });
 }
+document.getElementById("player-select").addEventListener("change", getPlayerInfo);
 
 function updateTable(data) {
     var columns = Object.keys(data[0]);
@@ -110,3 +112,5 @@ function filterTable() {
         }
     }
 }
+var initialTable = getSelectedTable();
+fetchTableData(initialTable);

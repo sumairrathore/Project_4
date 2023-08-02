@@ -45,7 +45,7 @@ function getSelectedTable() {
     }
     else {
         // Return the default table name
-        return "players_23";
+        return "FIFA23_official_data";
     }
 }
 

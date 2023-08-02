@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, request
 from sqlalchemy import create_engine, inspect
 import pandas as pd
 import os
-import joblib
+import sqlite3
+import pickle
 
 app = Flask(__name__)
 
 def load_csv_to_database():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     inspector = inspect(engine)
     # Get a list of all CSV files in the data directory
@@ -24,33 +24,54 @@ def load_csv_to_database():
             # Insert the DataFrame into the database table
             df.to_sql(table_name, engine, if_exists='replace', index=False)
 
+# Load the machine learning model
+with open('path_to_your_model.pkl', 'rb') as file:
+    model = pickle.load(file)
+
+# Function to predict next year's stats using the model
+def predict_next_year_stats(data):
+    # Process the data if needed and prepare it for prediction
+    # For example, you might need to convert categorical variables or scale the data
+    
+    # Assuming 'data' is already in the right format for prediction
+    predictions = model.predict(data)
+    return predictions
+
 @app.route('/')
 def index():
-    # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
-    engine = create_engine('sqlite:///data/db/project4db.db')
-    # Query the required columns from all the tables
-    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
-    # Fetch the results from each table and concatenate them
-    players = []
-    for table in tables:
-        query = f"SELECT * FROM {table} LIMIT 100"
-        results = engine.execute(query)
-        players += [dict(row) for row in results]
-    # Render the index.html template and pass the players data to it
-    return render_template('index.html', players=players)
+    return render_template('index.html')
+
+@app.route('/get_predictions', methods=['POST'])
+def get_predictions():
+    # Connect to your SQLite database
+    conn = sqlite3.connect('data/db/project4db.db')
+    cursor = conn.cursor()
+
+    # Fetch the data from the database (Assuming you have a table called 'players')
+    cursor.execute('SELECT * FROM players')
+    data = cursor.fetchall()
+    
+    # Process the data if needed and prepare it for prediction
+    # For example, you might need to convert categorical variables or scale the data
+
+    # Predict next year's stats using the model
+    predictions = predict_next_year_stats(data)
+
+    # Close the database connection
+    conn.close()
+
+    return jsonify(predictions.tolist())
 
 @app.route('/player')
 def player():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
-    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
+    tables = ['FIFA17_official_data', 'FIFA18_official_data', 'FIFA19_official_data', 'FIFA20_official_data', 'FIFA21_official_data', 'FIFA22_official_data', 'FIFA23_official_data']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        # Query the unique values from the `short_name` column of the `players` table
+        # Query the unique values from the `Name` column of the table
         query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
@@ -60,18 +81,17 @@ def player():
 @app.route('/league')
 def league():
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
-    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
+    tables = ['FIFA17_official_data', 'FIFA18_official_data', 'FIFA19_official_data', 'FIFA20_official_data', 'FIFA21_official_data', 'FIFA22_official_data', 'FIFA23_official_data']
     # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        # Query the unique values from the `short_name` column of the `players` table
+        # Query the unique values from the `Name` column of the table
         query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
-    # Render the player.html template and pass the players data to it
+    # Render the league.html template and pass the players data to it
     return render_template('league.html', players=players)
 
 @app.route('/map')
@@ -80,9 +100,8 @@ def map():
 
 @app.route('/data')
 def get_table_data():
-    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'FIFA23_official_data')  # Get the table parameter from the query string, default to 'players_15'
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
     query = f"SELECT * FROM {table} LIMIT 100"
@@ -93,13 +112,12 @@ def get_table_data():
 
 @app.route('/player_info')
 def get_player_info():
-    table = request.args.get('table', 'players_23')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'FIFA23_official_data')  # Get the table parameter from the query string, default to 'players_15'
     selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
-    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Return the table data as a JSON response
@@ -107,13 +125,12 @@ def get_player_info():
 
 @app.route('/league_info')
 def get_league_info():
-    table = request.args.get('table', 'players_15')  # Get the table parameter from the query string, default to 'players_15'
+    table = request.args.get('table', 'FIFA23_official_data')  # Get the table parameter from the query string, default to 'players_15'
     selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
     # Create a SQLAlchemy engine to connect to the database
-    #engine = create_engine('sqlite:///data/db/database.db')
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
-    query = f"SELECT Name, Age, Nationality, Club, Best_Position FROM {table} WHERE Name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     leagues = [dict(row) for row in results]
     # Return the table data as a JSON response
@@ -127,20 +144,4 @@ if __name__ == '__main__':
     # Load all the CSV files into the database
     load_csv_to_database()
     # Run the Flask application
-    app.run(debug=True)
-
-model = joblib.load('path_to_your_model.pkl')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get input data from the request
-    data = request.get_json()
-
-    # Make predictions using the loaded model
-    predictions = model.predict(data)
-
-    # Return the predictions as JSON
-    return jsonify(predictions.tolist())
-
-if __name__ == '__main__':
     app.run(debug=True)
