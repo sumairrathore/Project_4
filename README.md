@@ -26,15 +26,15 @@ We will utilize a Python Flask-powered API, HTML/CSS, JavaScript, and a database
 Project_3/
 ├── data/
 │   ├── cleaned_data/
-│   │   ├── players_17_clean.csv
-│   │   ├── players_18_clean.csv
-│   │   ├── players_19_clean.csv
-│   │   ├── players_20_clean.csv
-│   │   ├── players_21_clean.csv
-│   │   ├── players_22_clean.csv
-│   │   └── players_23_clean.csv
+│   │   ├── players_17.csv
+│   │   ├── players_18.csv
+│   │   ├── players_19.csv
+│   │   ├── players_20.csv
+│   │   ├── players_21.csv
+│   │   ├── players_22.csv
+│   │   └── players_23.csv
 │   ├── db/
-│   │   └── database.db
+│   │   └── project4db.db
 │   ├── raw_data/
 │   │   ├── players_17.csv
 │   │   ├── players_18.csv
@@ -48,16 +48,13 @@ Project_3/
 │   ├── css/
 │   │   └── style.css
 │   └── js/
-│       ├── map.js
-│       ├── league.js
 │       ├── player.js
 │       └── logic.js
 ├── templates/
-│   ├── map.html
 │   ├── index.html
-│   ├── league.html
 │   └── player.html
 ├── app.py
+├── ml_model.py
 └── README.md
 ```
 
