@@ -15,14 +15,11 @@ function getModelInfo() {
             ageCell.textContent = data[i]['Age'];
             var nationalityCell = document.createElement("td");
             nationalityCell.textContent = data[i]['Nationality'];
-            var wageCell = document.createElement("td");
-            wageCell.textContent = data[i]['Wage'];
             var predictedRatingCell = document.createElement("td");
             predictedRatingCell.textContent = data[i]['PredictedRating'];
             row.appendChild(nameCell);
             row.appendChild(ageCell);
             row.appendChild(nationalityCell);
-            row.appendChild(wageCell);
             row.appendChild(predictedRatingCell); // Add the predicted rating cell to the row
             tbody.appendChild(row);
         }

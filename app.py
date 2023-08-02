@@ -75,7 +75,7 @@ def ml_model_info():
         results = engine.execute(query)
         players = [row[0] for row in results]
     # Render the player.html template and pass the players data to it
-    return render_template('player.html', players=players)
+    return render_template('ml_model.html', players=players)
 
 @app.route('/data')
 def get_table_data():
@@ -111,7 +111,7 @@ def get_ml_model_info():
     table = request.args.get('table', 'players_17')
     selectedPlayer = request.args.get('selectedPlayer', '')
     engine = create_engine('sqlite:///data/db/project4db.db')
-    query = f"SELECT Name, Age, Nationality, Club, Wage FROM {table} WHERE Name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Add a predicted rating to each player's data
@@ -119,8 +119,7 @@ def get_ml_model_info():
         ml_model_info = {
             'Age': player['Age'],
             'Nationality': player['Nationality'],
-            'Club': player['Club'],
-            'Wage': player['Wage']
+            'Club': player['Club']
         }
         #player['PredictedRating'] = predict_player_rating(ml_model_info)
         # Integrate the actual machine learning model prediction here
