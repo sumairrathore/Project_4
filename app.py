@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from sqlalchemy import create_engine, inspect
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
 import pandas as pd
 import os
 import ml_model
@@ -38,13 +40,6 @@ def index():
     # Render the index.html template and pass the players data to it
     return render_template('index.html', players=players)
 
-# Add a placeholder function for the machine learning model
-def predict_player_rating(player_info):
-    # Replace this with your actual machine learning model prediction code
-    # For example, if your model is a classifier, return the predicted class label.
-    # If your model is a regression model, return the predicted rating value.
-    return 80.0  # Placeholder value, replace it with the actual prediction
-
 @app.route('/player')
 def player():
     # Create a SQLAlchemy engine to connect to the database
@@ -63,19 +58,28 @@ def player():
 
 @app.route('/ml_model')
 def ml_model_info():
-    # Create a SQLAlchemy engine to connect to the database
+    table = request.args.get('table', 'players_17')
+    selectedPlayer = request.args.get('selectedPlayer', '')
     engine = create_engine('sqlite:///data/db/project4db.db')
-    # Query the required columns from all the tables
-    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
-    # Fetch the results from each table and concatenate them
-    players = []
-    for table in tables:
-        # Query the unique values from the `short_name` column of the `players` table
-        query = f"SELECT DISTINCT Name FROM {table}"
-        results = engine.execute(query)
-        players = [row[0] for row in results]
-    # Render the player.html template and pass the players data to it
-    return render_template('ml_model.html', players=players)
+    query = f"SELECT Name, Age, Nationality, Club FROM {table} WHERE Name = '{selectedPlayer}'"
+    results = engine.execute(query)
+    players = [dict(row) for row in results]
+    # Add a predicted rating to each player's data
+    for player in players:
+        ml_model_info = {
+            'Age': player['Age'],
+            'Nationality': player['Nationality'],
+            'Club': player['Club']
+        }
+        player['PredictedRating'] = ml_model.predict_player_rating(ml_model_info)  # Replace with your actual prediction function
+    return jsonify(players)
+
+# Add a placeholder function for the machine learning model
+def predict_player_rating(player_info):
+    # Replace this with your actual machine learning model prediction code
+    # For example, if your model is a classifier, return the predicted class label.
+    # If your model is a regression model, return the predicted rating value.
+    return 80.0  # Placeholder value, replace it with the actual prediction
 
 @app.route('/data')
 def get_table_data():
@@ -135,7 +139,6 @@ if __name__ == '__main__':
     # Load all the CSV files into the database
     load_csv_to_database()
     # Initialize, train, and evaluate the machine learning model
-    # (Call the appropriate function to train and evaluate the machine learning model from ml_model module)
-    #ml_model.train_and_evaluate_model()  # Replace this with the actual function name to train and evaluate the model
+    ml_model.train_and_evaluate_model()  # Replace with your actual function to train and evaluate the model
     # Run the Flask application
     app.run(debug=True)
