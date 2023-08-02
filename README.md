@@ -48,9 +48,11 @@ Project_3/
 │   ├── css/
 │   │   └── style.css
 │   └── js/
+│       ├── ml_model.js
 │       ├── player.js
 │       └── logic.js
 ├── templates/
+│   ├── ml_model.html
 │   ├── index.html
 │   └── player.html
 ├── app.py
