@@ -24,43 +24,9 @@ def load_csv_to_database():
             # Insert the DataFrame into the database table
             df.to_sql(table_name, engine, if_exists='replace', index=False)
 
-# Load the machine learning model
-with open('path_to_your_model.pkl', 'rb') as file:
-    model = pickle.load(file)
-
-# Function to predict next year's stats using the model
-def predict_next_year_stats(data):
-    # Process the data if needed and prepare it for prediction
-    # For example, you might need to convert categorical variables or scale the data
-    
-    # Assuming 'data' is already in the right format for prediction
-    predictions = model.predict(data)
-    return predictions
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/get_predictions', methods=['POST'])
-def get_predictions():
-    # Connect to your SQLite database
-    conn = sqlite3.connect('data/db/project4db.db')
-    cursor = conn.cursor()
-
-    # Fetch the data from the database (Assuming you have a table called 'players')
-    cursor.execute('SELECT * FROM players')
-    data = cursor.fetchall()
-    
-    # Process the data if needed and prepare it for prediction
-    # For example, you might need to convert categorical variables or scale the data
-
-    # Predict next year's stats using the model
-    predictions = predict_next_year_stats(data)
-
-    # Close the database connection
-    conn.close()
-
-    return jsonify(predictions.tolist())
 
 @app.route('/player')
 def player():
@@ -117,7 +83,7 @@ def get_player_info():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
-    query = f"SELECT Name, Age, Nationality, Club, Overall, Potential, Wage, Club Logo FROM {table} WHERE Name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality, Club, Overall, Potential, Wage, Predicted_Overall FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
     players = [dict(row) for row in results]
     # Return the table data as a JSON response

@@ -1,116 +1,88 @@
 function getPlayerInfo() {
-    var selectedPlayer = document.getElementById("player-select").value;
-    var selectedTable = getSelectedTable();
-    // Make an AJAX request to the server to get the player information
-    $.get("/player_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
-        // Update the table data with the received player information
-        updateTable(data);
-        var playerTable = document.getElementById("player-table");
-        var tbody = playerTable.getElementsByTagName("tbody")[0];
-        tbody.innerHTML = "";
-        for (var i = 0; i < data.length; i++) {
-            var row = document.createElement("tr");
-            var shortNameCell = document.createElement("td");
-            shortNameCell.textContent = data[i].short_name;
-            var ageCell = document.createElement("td");
-            ageCell.textContent = data[i].age;
-            var nationalityCell = document.createElement("td");
-            nationalityCell.textContent = data[i].nationality;
-            var clubCell = document.createElement("td");
-            clubCell.textContent = data[i].club;
-            row.appendChild(shortNameCell);
-            row.appendChild(ageCell);
-            row.appendChild(nationalityCell);
-            row.appendChild(clubCell);
-            tbody.appendChild(row);
-        }
-    });
-}
+    // Get the selected player from the dropdown
+    const selectedPlayer = document.getElementById("player-select").value;
 
-function getSelectedTable() {
-    // Get the hash value from the URL
-    var hash = window.location.hash;
-    if (hash) {
-        // Remove the '#' character from the hash
-        var table = hash.substr(1);
-        return table;
-    }
-    else {
-        // Return the default table name
-        return "FIFA23_official_data";
-    }
-}
+    // Get the table body
+    const playerTableBody = document.getElementById("player-table").getElementsByTagName("tbody")[0];
 
-$(document).ready(function() {
-    // Add active class to the first table link by default
-    $(".filters a:first").addClass("active");
-    // Add an event listener to the filter links
-    $(".filters a").click(function(event) {
-        // Prevent the default behavior of the anchor tag
-        event.preventDefault();
-        $(".filters a").removeClass("active");
-        $(this).addClass("active");
-        var table = $(this).attr("href").substring(1);
-        fetchTableData(table);
-        // Update the URL hash with the selected table
-        window.location.hash = $(this).attr("href");
-        // Call the getPlayerInfo function to update the table data
-        getPlayerInfo();
-    });
-    // Fetch table data for the initial table
-    var initialTable = $(".filters a:first").attr("href").substring(1);
-    fetchTableData(initialTable);
-    // Call the getPlayerInfo function initially to load the default table data
-    getPlayerInfo();
-});
+    // Clear the previous player rows before populating new data
+    playerTableBody.querySelectorAll("tr.data-row").forEach(row => row.remove());
 
-function fetchTableData(table) {
-    $.ajax({
-        url: "/player_info",
-        data: { table: table },
-        success: function(data) {
-            updateTable(data);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error fetching table data:", error);
-        }
-    });
-}
-document.getElementById("player-select").addEventListener("change", getPlayerInfo);
+    // Make an AJAX request to fetch player information based on the selected player
+    fetch(`/player_info?selectedPlayer=${selectedPlayer}`)
+        .then(response => response.json())
+        .then(data => {
+            // Populate the player table with the retrieved data
+            if (data.length > 0) {
+                data.forEach(playerInfo => {
+                    const row = document.createElement("tr");
+                    row.classList.add("data-row");
+                   
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = playerInfo.Name;
+                    
+                    const ageCell = document.createElement("td");
+                    ageCell.textContent = playerInfo.Age;
+                   
+                    const nationalityCell = document.createElement("td");
+                    nationalityCell.textContent = playerInfo.Nationality;
+                   
+                    const clubCell = document.createElement("td");
+                    clubCell.textContent = playerInfo.Club;
+                    
+                    const overallCell = document.createElement("td");
+                    overallCell.textContent = playerInfo.Overall;
+                    
+                    const potentialCell = document.createElement("td");
+                    potentialCell.textContent = playerInfo.Potential;
+                    
+                    const wageCell = document.createElement("td");
+                    wageCell.textContent = playerInfo.Wage;
+                                           
+                    const PredictedOverallCell = document.createElement("td");
+                    PredictedOverallCell.innerHTML = playerInfo.Predicted_Overall;
 
-function updateTable(data) {
-    var columns = Object.keys(data[0]);
-    // Update the table header
-    var tableHeader = "<tr>";
-    columns.forEach(function(column) {
-        tableHeader += "<th>" + column + "</th>";
-    });
-    tableHeader += "</tr>";
-    $("table thead").html(tableHeader);
-    // Update the table rows
-    var tableRows = "";
-    data.forEach(function(row) {
-        tableRows += "<tr>";
-        columns.forEach(function(column) {
-            tableRows += "<td>" + row[column] + "</td>";
+
+                    row.appendChild(nameCell);
+                    row.appendChild(ageCell);
+                    row.appendChild(nationalityCell);
+                    row.appendChild(clubCell);
+                    row.appendChild(overallCell);
+                    row.appendChild(potentialCell);
+                    row.appendChild(wageCell);
+                    row.appendChild(PredictedOverallCell);
+
+                    playerTableBody.appendChild(row);
+                });
+            } else {
+                // If no data is found, display a message in the table
+                const row = document.createElement("tr");
+                row.classList.add("data-row");
+                const messageCell = document.createElement("td");
+                messageCell.colSpan = 8; // Adjust the colspan according to the number of columns in the table
+                messageCell.textContent = "No data available for the selected player.";
+                row.appendChild(messageCell);
+                playerTableBody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching player information:", error);
         });
-        tableRows += "</tr>";
-    });
-    $("table tbody").html(tableRows);
 }
 
-function filterTable() {
-    var selectedPlayer = document.getElementById('player-select').value;
-    var rows = document.getElementsByClassName('player-row');
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        if (row.cells[0].innerText === selectedPlayer) {
-            row.style.display = '';
-        }
-        else {
-            row.style.display = 'none';
+function searchPlayer() {
+    const searchText = document.getElementById("search-bar").value;
+    const playerSelect = document.getElementById("player-select");
+
+    // Search for the player in the dropdown options
+    const options = playerSelect.getElementsByTagName("option");
+    for (let i = 0; i < options.length; i++) {
+        const player = options[i].value;
+        if (player.toLowerCase().includes(searchText.toLowerCase())) {
+            // If the player is found, set it as the selected option and trigger getPlayerInfo()
+            playerSelect.value = player;
+            getPlayerInfo();
+            break;
         }
     }
 }
-var initialTable = getSelectedTable();
-fetchTableData(initialTable);
