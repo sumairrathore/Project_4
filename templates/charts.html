@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fifa Analytics Dashboard - Charts</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body onload="init()">
+    <header>
+        <h1>Fifa Analytics Dashboard</h1>
+    </header>
+    <nav class="top-nav">
+        <ul>
+            <li><a href="/">All Data</a></li>
+            <li><a href="/player">Player Data</a></li>
+            <li><a href="/map">Map</a></li>
+            <li class="active"><a href="/charts">Charts</a></li>
+        </ul>
+    </nav>
+    <section>
+        <div class="filters">
+            <ul class="list-unstyled">
+                <li><a href="#players_17">Players 2017</a></li>
+                <li><a href="#players_18">Players 2018</a></li>
+                <li><a href="#players_19">Players 2019</a></li>
+                <li><a href="#players_20">Players 2020</a></li>
+                <li><a href="#players_21">Players 2021</a></li>
+                <li><a href="#players_22">Players 2022</a></li>
+                <li><a href="#players_23">Players 2023</a></li>
+            </ul>
+        </div>
+        <div class="content col-lg-9">
+            <!-- Add the chart containers here -->
+            <div id="bar"></div>
+            <div id="bubble"></div>
+            <!-- Add other chart containers if needed -->
+        </div>
+    </section>
+    <footer>
+        <p>Project 4</p>
+    </footer>
+    <!-- Include the JavaScript file for chart creation -->
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+</body>
+</html>

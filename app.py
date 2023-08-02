@@ -23,6 +23,19 @@ def load_csv_to_database():
             # Insert the DataFrame into the database table
             df.to_sql(table_name, engine, if_exists='replace', index=False)
 
+def fetch_chart_data():
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    # Query the required columns from the specified table
+    tables = ['players_17', 'players_18', 'players_19', 'players_20', 'players_21', 'players_22', 'players_23']
+    # Fetch the results from each table and concatenate them
+    players = []
+    for table in tables:
+        query = f"SELECT * FROM {table} LIMIT 100"
+        results = engine.execute(query)
+        players += [dict(row) for row in results]
+    return players
+
 @app.route('/')
 def index():
     # Create a SQLAlchemy engine to connect to the database
@@ -63,6 +76,12 @@ def player():
     # Render the player.html template and pass the players data to it
     return render_template('player.html', players=players)
 
+@app.route('/charts')
+def charts():
+    # Fetch data for the charts.html template
+    chart_data = fetch_chart_data()
+    return render_template('charts.html', players=chart_data)
+
 @app.route('/map')
 def map():
     return render_template('map.html')
@@ -101,6 +120,11 @@ def get_player_info():
         # Replace predict_player_rating() with the prediction function provided by your group members
         # For example: player['PredictedRating'] = ml_model.predict(player_info)
     return jsonify(players)
+
+# Add a route to serve the charts.js file
+@app.route('/static/js/charts.js')
+def serve_charts_js():
+    return app.send_static_file('js/charts.js')
 
 @app.route('/favicon.ico')
 def favicon():
