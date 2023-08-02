@@ -2,7 +2,7 @@ function getModelInfo() {
     var selectedPlayer = document.getElementById("player-select").value;
     var selectedTable = getSelectedTable();
     // Make an AJAX request to the server to get the player information
-    $.get("/ml_model_info", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
+    $.get("/ml_model", { table: selectedTable, selectedPlayer: selectedPlayer }, function(data) {
         // Update the table data with the received player information
         var playerTable = document.getElementById("player-table");
         var tbody = playerTable.getElementsByTagName("tbody")[0];
