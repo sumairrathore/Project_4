@@ -32,16 +32,12 @@ def index():
 def player():
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/project4db.db')
-    # Query the required columns from all the tables
     tables = ['FIFA17_official_data', 'FIFA18_official_data', 'FIFA19_official_data', 'FIFA20_official_data', 'FIFA21_official_data', 'FIFA22_official_data', 'FIFA23_official_data']
-    # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        # Query the unique values from the `Name` column of the table
         query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
-    # Render the player.html template and pass the players data to it
     return render_template('player.html', players=players)
 
 @app.route('/league')
@@ -50,10 +46,8 @@ def league():
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from all the tables
     tables = ['FIFA17_official_data', 'FIFA18_official_data', 'FIFA19_official_data', 'FIFA20_official_data', 'FIFA21_official_data', 'FIFA22_official_data', 'FIFA23_official_data']
-    # Fetch the results from each table and concatenate them
     players = []
     for table in tables:
-        # Query the unique values from the `Name` column of the table
         query = f"SELECT DISTINCT Name FROM {table}"
         results = engine.execute(query)
         players = [row[0] for row in results]
@@ -91,8 +85,8 @@ def get_player_info():
 
 @app.route('/league_info')
 def get_league_info():
-    table = request.args.get('table', 'FIFA23_official_data')  # Get the table parameter from the query string, default to 'players_15'
-    selectedPlayer = request.args.get('selectedPlayer', '')  # Get the selectedPlayer parameter from the query string
+    table = request.args.get('table', 'FIFA23_official_data')  
+    selectedPlayer = request.args.get('selectedPlayer', '')  
     # Create a SQLAlchemy engine to connect to the database
     engine = create_engine('sqlite:///data/db/project4db.db')
     # Query the required columns from the specified table
@@ -102,6 +96,21 @@ def get_league_info():
     # Return the table data as a JSON response
     return jsonify(leagues)
 
+@app.route('/player_stats')
+def get_player_stats():
+    selectedPlayer = request.args.get('selectedPlayer', '') 
+    # Create a SQLAlchemy engine to connect to the database
+    engine = create_engine('sqlite:///data/db/project4db.db')
+    
+    query = f"SELECT Dribbling, ShortPassing, Acceleration, Vision, SlidingTackle FROM FIFA22_official_data WHERE Name = '{selectedPlayer}'"
+    results = engine.execute(query)
+    player_stats = [dict(row) for row in results]
+
+    if not player_stats:
+        player_stats = [{"Dribbling": None, "ShortPassing": None, "Acceleration": None, "Vision": None, "SlidingTackle": None}]  # If player not found in the table, add None values
+
+    return jsonify(player_stats[0])
+ 
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
