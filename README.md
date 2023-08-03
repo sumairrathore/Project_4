@@ -70,8 +70,9 @@ Project_3/
     - The main page of the application (`index.html`) will display the player data fetched from the database.
 
 ## Presentation Notes
-The project is a FIFA analytics dashboard that allows users to explore and analyze FIFA player data based on different filters. The dashboard is built using Flask, a Python web framework, and utilizes a SQLite database to store and retrieve the data.
+The project is a FIFA analytics dashboard that allows users to explore and analyze FIFA player data based on different filters. The dashboard is built using Flask, a Python web framework, and utilizes a SQLite database to store and retrieve the data. Overall, the project provides a user-friendly interface for exploring and analyzing FIFA player data, allowing users to filter and view information about players and leagues.
 
-Overall, the project provides a user-friendly interface for exploring and analyzing FIFA player data, allowing users to filter and view information about players and leagues.
+### Olivia's Project 4 Presentation Notes
+The FIFA Player Analytics Dashboard dives into comprehensive FIFA player data, from player details like (Age, Wage, Acceleration, Ball Control, and Overall Potential), to machine learning driven performance predictions, presented through a Flask web application that seamlessly integrates data modeling and optimization.
 
 [Back To Top](#project-4-fifa-analytics)
