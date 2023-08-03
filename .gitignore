@@ -1,0 +1,10 @@
+# Hidden Folders
+__pycache__
+data/.ipynb_checkpoints
+Khan/.ipynb_checkpoints
+
+# Hidden Files
+.DS_Store
+
+# Hide Itself
+#.gitignore
