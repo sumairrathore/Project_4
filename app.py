@@ -119,4 +119,4 @@ if __name__ == '__main__':
     # Load all the CSV files into the database
     load_csv_to_database()
     # Run the Flask application
-    app.run(debug=True)
+    app.run(debug=False, host = '0.0.0.0')
