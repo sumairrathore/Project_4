@@ -36,7 +36,7 @@ function getSelectedTable() {
     }
     else {
         // Return the default table name
-        return "players_23";
+        return "players_17";
     }
 }
 

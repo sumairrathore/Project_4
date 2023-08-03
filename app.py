@@ -28,25 +28,6 @@ def load_csv_to_database():
             # Insert the DataFrame into the database table
             df.to_sql(table_name, engine, if_exists='replace', index=False)
 
-def train_and_evaluate_model():
-    data = pd.read_csv('data/cleaned_data/players_17.csv')
-    # Data preprocessing
-    selected_features = ['Age', 'Potential', 'International Reputation', 'BallControl', 'Acceleration', 'Strength']
-    X = data[selected_features]
-    y = data['Overall']  # Use 'Overall' as the target variable
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    # Data normalization and standardization
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-    # Model initialization, training, and evaluation
-    model = LinearRegression()
-    model.fit(X_train_scaled, y_train)
-    y_pred = model.predict(X_test_scaled)
-    # Model performance evaluation
-    r_squared = r2_score(y_test, y_pred)
-    print(f"R-squared: {r_squared:.2f}")
-
 @app.route('/')
 def index():
     # Create a SQLAlchemy engine to connect to the database
@@ -144,21 +125,21 @@ def get_ml_model_info():
     table = request.args.get('table', 'players_17')
     selectedPlayer = request.args.get('selectedPlayer', '')
     engine = create_engine('sqlite:///data/db/project4db.db')
-    query = f"SELECT Name, Age, Nationality, Club FROM {table} WHERE Name = '{selectedPlayer}'"
+    query = f"SELECT Name, Age, Nationality FROM {table} WHERE Name = '{selectedPlayer}'"
     results = engine.execute(query)
-    players = [dict(row) for row in results]
+    players_ml = [dict(row) for row in results]
     # Add a predicted rating to each player's data
-    for player in players:
+    for player in players_ml:
         ml_model_info = {
+            'Name': player['Name'],
             'Age': player['Age'],
             'Nationality': player['Nationality'],
-            'Club': player['Club']
         }
         player['PredictedRating'] = predict_player_rating(ml_model_info)
         # Integrate the actual machine learning model prediction here
         # Replace predict_player_rating() with the prediction function provided by your group members
         # For example: player['PredictedRating'] = ml_model.predict(player_info)
-    return jsonify(players)
+    return jsonify(players_ml)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -168,6 +149,5 @@ if __name__ == '__main__':
     # Load all the CSV files into the database
     load_csv_to_database()
     # Initialize, train, and evaluate the machine learning model
-    train_and_evaluate_model()  # Replace with your actual function to train and evaluate the model
     # Run the Flask application
     app.run(debug=True)
