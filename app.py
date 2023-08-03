@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from matplotlib import Scalar
 from sqlalchemy import create_engine, inspect
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -123,6 +124,15 @@ def ml_model():
 
 # Add a placeholder function for the machine learning model
 def predict_player_rating(player_info):
+    # Load the trained model
+    #model = joblib.load('trained_model.pkl')
+    # Preprocess the player information
+    #selected_features = ['Age', 'Potential', 'International Reputation', 'BallControl', 'Acceleration', 'Strength']
+    #player_features = [player_info[feature] for feature in selected_features]
+    #player_features_scaled = Scalar.transform([player_features])  # Apply the same scaler used during training
+    # Predict the player's rating
+    #predicted_rating = model.predict(player_features_scaled)[0]
+    #return predicted_rating
     # Replace this with your actual machine learning model prediction code
     # For example, if your model is a classifier, return the predicted class label.
     # If your model is a regression model, return the predicted rating value.
